@@ -6,7 +6,6 @@
 
 /*
       Car specifics:
-      Locker code: 835
       Code to room: 9010
 
       
