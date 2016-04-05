@@ -16,7 +16,7 @@ In new terminal: odcockpit --cid=111
 
 Setting up correctly:
 
-FOLLOW THESE FUCKING STEPS:
+FOLLOW THESE STEPS:
 https://github.com/se-research/OpenDaVINCI/blob/master/docs/installation.ubuntu-14.04.rst
 DO NOT RUN LAST COMMAND
 
@@ -52,7 +52,7 @@ Run command ./proxy --cid=111 --freq=60
 
 STOP CAMERA WHEN YOU HAVE CAPTURED A FEW SECONDS OF FILM
 
-In new terminal, in any fucking folder
+In new terminal, in any folder
 Run command odcockpit --cid=111
 
 Inside simulator, open sharedImageViewer and Player
