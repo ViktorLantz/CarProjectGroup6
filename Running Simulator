@@ -59,4 +59,24 @@ Inside simulator, open sharedImageViewer and Player
 Load the recording from home.
 press play and press the webcam which appears in sharedImageViewer.
 
+Running BOXPARKER EXAMPLE:
+In downloaded zip file with the car1, box_parker & configuration file.
+SEPERATE TERMINALS FOR EACH COMMAND
+viktor@viktor-Lenovo-G510:~/Desktop/ODV$ odsupercomponent --cid=111
+
+viktor@viktor-Lenovo-G510:~/Desktop/ODV$ odsimvehicle --cid=111 --freq=10
+
+viktor@viktor-Lenovo-G510:~/Desktop/ODV$ odsimirus --cid=111 --freq=10
+
+viktor@viktor-Lenovo-G510:~/Desktop/ODV$ odcockpit --cid=111
+
+Open new terminal and go into the cloned git repository (OPENDAVINCI)
+cd to:
+/OpenDaVINCI/automotive/miniature/boxparker/build
+
+Run this command: ./boxparker --cid=111 --freq=10
+
+In the cockpit, open birdeyemap &&/|| IRUS charts etc, in order to see the data values as the car drives.
+
+
 
