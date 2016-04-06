@@ -23,7 +23,7 @@ DO NOT RUN LAST COMMAND
 THEN FOLLOW THESE STEPS:
 Create build folder in proxy. (PROXY IS IN automotive/minature/proxy)
 cd into build folder.
-cmake
+cmake ..
 make -j4
 
 In odsupercomponent configuration file, ensure that the proxy camera settings match this:
