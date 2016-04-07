@@ -79,18 +79,4 @@ Run this command: ./boxparker --cid=111 --freq=10
 In the cockpit, open birdeyemap &&/|| IRUS charts etc, in order to see the data values as the car drives.
 
 
-=====================================================================
-FOR ODSIMCAM AND LANEDETECTOR
-=====================================================================
-
-1. martin@martin-Lenovo-IdeaPad-Y570:~/ODV$ odsupercomponent --cid=111 --verbose=1
-
-2. martin@martin-Lenovo-IdeaPad-Y570:~/ODV$ odsimvehicle --cid=111 --freq=10
-
-3. martin@martin-Lenovo-IdeaPad-Y570:~/ODV$ odsimirus --cid=111 --freq=10
-
-4. martin@martin-Lenovo-IdeaPad-Y570:~/ODV$ odsimcamera --cid=111 --freq=10
-
-5. ./lanedetector --cid=111 --freq=10 --verbose=1 (AFTER LANEDETECTOR WAS COMPILED)
-
 
