@@ -17,6 +17,7 @@ using namespace std;
 int main( int argc, char** argv ) {
   Mat src, src_gray, dst;
   int img_width, img_height;
+  int dif;
 
   /// Load an image
   src = imread( argv[1] );
@@ -85,8 +86,19 @@ int main( int argc, char** argv ) {
       line(src, Point(img_width/2, y), left, Scalar(0, 255, 0), 1, 8);     // draw a green line from the middle to left point
     }
     if(right.x > 0) {
-      line(src, Point(img_width/2, y), right, Scalar(0, 0, 255), 1, 8);
+      line(src, Point(img_width/2, y), right, Scalar(0, 0, 255), 1, 8);    // draw a red line from middle to right
     }
+
+    // Calculate differences between right and left lines
+    dif = (right.x - img_width/2) - (img_width/2 - left.x);
+    cout <<"Dif is: "<<dif<<endl;
+
+    /*
+     *    Could calculate average of dif values to determine how off-centre car is
+     *    and then adjust the wheel angles etc. depending on this
+     *    positive --> further on the left side, negative --> right side
+     *
+     */
   }
 
  imshow("source", src);
