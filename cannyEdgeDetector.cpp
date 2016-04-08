@@ -17,6 +17,7 @@ using namespace std;
 int main( int argc, char** argv ) {
   Mat src, src_gray, dst;
   int img_width, img_height;
+  int dif;
 
   /// Load an image
   src = imread( argv[1] );
@@ -49,16 +50,14 @@ int main( int argc, char** argv ) {
        line( src, pt1, pt2, Scalar(255,0,0), 1, 8);
     }
 
-  // Scan the image at 3 different heights
-  for(int y = 1; y < img_height; y += 10) {
+  // Scan the image at different heights
+  for(int y = 1; y < img_height; y += 20) {
       // Scan from middle to right
       // start at the middle pixel and compare the colour until a blue pixel is found i.e. a hough line
-      //Scalar pixelRightCol;
       Point right;
       right.x = -1;
       right.y = y;
       for(int x = img_width/2; x < img_width; x++) {
-          //pixelRightCol = cvGet2D(src, x, y);
           // Check to see if a blue pixel has been found
           if(src.at<cv::Vec3b>(y, x)[0] >= 200) {
               right.x = x;                    // set the x coordinate to the value where a blue pixel was detected
@@ -67,12 +66,10 @@ int main( int argc, char** argv ) {
       }
 
       // Scan from middle to left
-      //Scalar pixelLeftCol;
       Point left;
       left.x = -1;
       left.y = y;
       for(int x = img_width/2; x > 0; x--) {
-        //pixelLeftCol = src.at<cv::Vec3b>>(y, x);
         // Check if colour of pixel is blue
         if(src.at<cv::Vec3b>(y, x)[0] >= 200) {
           left.x = x;
@@ -87,6 +84,17 @@ int main( int argc, char** argv ) {
     if(right.x > 0) {
       line(src, Point(img_width/2, y), right, Scalar(0, 0, 255), 1, 8);
     }
+    
+    // Calculate the difference in length of the red and green lines
+    // i.e. how off centre the car is
+      /*
+       *  Move the car based on this difference
+       *  Could calculate the average dif for each "line sample"
+       *  positive --> further left, negative --> further right
+       *
+       */
+    dif = (right.x - img_width/2) - (img_width/2 - left.x);
+    cout <<"The difference is: "<<dif<<endl;
   }
 
  imshow("source", src);
