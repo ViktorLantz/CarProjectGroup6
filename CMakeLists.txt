@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project( EdgeDetect )
+find_package( OpenCV REQUIRED )
+include_directories(${OpenCV_INCLUDE_DIRS})
+add_executable( EdgeDetect cannyEdgeDetector.cpp )
+target_link_libraries( EdgeDetect ${OpenCV_LIBS} )
