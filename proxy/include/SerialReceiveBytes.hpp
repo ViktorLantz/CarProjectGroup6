@@ -23,8 +23,9 @@
 class SerialReceiveBytes : public odcore::io::StringListener {
 
 public:
-		virtual std::vector<int> getUSVector();
-    	virtual std::vector<int> getIRVector();
+	// << MODIFIED >>
+	std::vector<int> getUSVector();
+    std::vector<int> getIRVector();
     // Your class needs to implement the method void nextString(const std::string &s).
 	virtual void nextString(const std::string &s);
 
