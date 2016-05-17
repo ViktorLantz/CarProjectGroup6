@@ -1,4 +1,29 @@
 									//PARKER FOR SIMULATION
+
+/*Parker is an example application to demonstrate how to 
+ *         generate driving commands from an application realized
+ *         with OpenDaVINCI
+ * Copyright (C) 2012 - 2015 Christian Berger
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/*
+	DISCLAMER: 	Code is built from the example code provided by Christian Berger.
+*/
+
 #include <cmath>
 #include <iostream>
 #include <cstdio>
@@ -45,7 +70,7 @@ namespace automotive {
         bool parkingSpotFound = false;
 
         while (getModuleStateAndWaitForRemainingTimeInTimeslice() == odcore::data::dmcp::ModuleStateMessage::RUNNING) {
-        	
+			
         	Container containerVehicleData = getKeyValueDataStore().get(automotive::VehicleData::ID());
             VehicleData vd = containerVehicleData.getData<VehicleData> ();
             
@@ -55,13 +80,19 @@ namespace automotive {
             // Create vehicle control data.
             VehicleControl vc;
 
-            // Moving state machine.
+           /* 	START OF MOVING STATE MACHINE with hardcoded values.
+            * 	The first stage is the "looking for a spot" stage 
+			*	and differentiates in the way
+            * 	it moves on to the next stages compaired to the other stages.	
+            */
         	if(stageMoving == 0) {
+				//Moving and looking for gap
                 vc.setSpeed(1);
           		vc.setSteeringWheelAngle(0);
           	}
 
         	if((stageMoving > 0) && (stageMoving < 10)) {
+				// Going 10 'tics' forward
                 vc.setSpeed(1);
                 vc.setSteeringWheelAngle(0);
                 stageMoving++;
@@ -105,20 +136,18 @@ namespace automotive {
           	}
 
         	if ((stageMoving >= 127) && (stageMoving < 132)) {
-          		// Go backwards to center vehicle
+          		// Go backwards to make the vehicle stop
           		vc.setSpeed(-1);
           		vc.setSteeringWheelAngle(0);
           		stageMoving++;
           	}
 
           	if ((stageMoving >= 132) && (stageMoving < 135)) {
-          		// Stop.
+          		// Stop and stand still
           		vc.setSpeed(0);
           		vc.setSteeringWheelAngle(0);
           		stageMoving++;
           	}
-
-
 
         	if (stageMoving >= 135) {
           		// End component.
@@ -140,7 +169,8 @@ namespace automotive {
                   {
                       if(parkingSpotFound == false){
                         if ((distanceOld > 0) && (sbd.getValueForKey_MapOfDistances(2) < 0)) {
-                          stageMeasuring = 2;
+							//Found start of gap
+						  stageMeasuring = 2;
                           absPathStart = vd.getAbsTraveledPath();
                         }
                       }
@@ -150,9 +180,10 @@ namespace automotive {
                   case 2:
                     {
                     if(parkingSpotFound == false){
-
+						
                       	if ((distanceOld < 0) && (sbd.getValueForKey_MapOfDistances(2) > 0)) {
-                        	stageMeasuring = 1;
+                        	//Found end of gap
+							stageMeasuring = 1;
                         	absPathEnd = vd.getAbsTraveledPath();                        
                         	
                         	const double GAP_SIZE = (absPathEnd - absPathStart);
@@ -163,14 +194,13 @@ namespace automotive {
                         	}
 
                         	if((stageMoving < 1) && (GAP_SIZE > 3.5)) {
+								//Parking spot found
                           		stageMoving = 1;
                          		parkingSpotFound = true;
-                          		cout << "\n     Found Parking Spot";
-                        	}
+							}
                       	} 
-   
                     }
-                      distanceOld = sbd.getValueForKey_MapOfDistances(2);
+                    distanceOld = sbd.getValueForKey_MapOfDistances(2);
                     }
                   break;
                 }
